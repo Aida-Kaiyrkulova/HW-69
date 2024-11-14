@@ -20,25 +20,25 @@ const SearchBar = () => {
   };
 
   return (
-      <div className="search-bar-container">
-        <h2>Search for Tv Show:</h2>
-        <input
-          type="text"
-          value={query}
-          onChange={handleSearchChange}
-          placeholder="Type your search"
-        />
-        {query && results.length > 0 && (
-          <div className="autocomplete">
-            {results.map((show) => (
-              <Link to={`/shows/${show.id}`} key={show.id}>
-                <div className="autocomplete-item">{show.name}</div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-      );
-      };
+    <div className="search-bar-container">
+      <input
+        type="text"
+        value={query}
+        onChange={handleSearchChange}
+        placeholder="Search for TV Shows..."
+      />
+      {query && results.length > 0 && (
+        <div className="autocomplete">
+          {results.map((show) => (
+            <Link to={`/shows/${show.id}`} key={show.id} style={{ textDecoration: 'none' }}>
+              <div className="autocomplete-item">{show.name}</div>
+            </Link>
+          ))}
+        </div>
+      )}
+      {results.length === 0 && query && <p>No results found</p>}
+    </div>
+  );
+};
 
-      export default SearchBar;
+export default SearchBar;
