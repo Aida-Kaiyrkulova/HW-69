@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { searchReducer } from '../containers/SearchBar/searchSlice.ts';
-
+import { searchReducer } from "../containers/SearchBar/searchSlice.ts";
 
 export const store = configureStore({
-    reducer: {
-      search: searchReducer,
-    },
+  reducer: {
+    search: searchReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

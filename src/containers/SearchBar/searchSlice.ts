@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 interface Show {
   id: number;
@@ -9,23 +8,28 @@ interface Show {
 
 interface SearchState {
   results: Show[];
-  status: 'idle' | 'loading' | 'success' | 'fail';
+  status: "idle" | "loading" | "success" | "fail";
 }
 
 const initialState: SearchState = {
   results: [],
-  status: 'idle',
-}
+  status: "idle",
+};
 
-export const searchDisplay = createAsyncThunk('search/searchDisplay', async (query: string) => {
-  const response = await axios.get(`http://api.tvmaze.com/search/shows?q=${query}`);
-  return response.data.map(({ show }: { show: Show }) => show);
-});
+export const searchDisplay = createAsyncThunk(
+  "search/searchDisplay",
+  async (query: string) => {
+    const response = await axios.get(
+      `http://api.tvmaze.com/search/shows?q=${query}`,
+    );
+    return response.data.map(({ show }: { show: Show }) => show);
+  },
+);
 
 const searchSlice = createSlice({
-  name:'search',
+  name: "search",
   initialState,
-  reducers:{
+  reducers: {
     clearResults: (state) => {
       state.results = [];
     },
@@ -33,14 +37,14 @@ const searchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(searchDisplay.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(searchDisplay.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = "success";
         state.results = action.payload;
       })
       .addCase(searchDisplay.rejected, (state) => {
-        state.status = 'fail';
+        state.status = "fail";
       });
   },
 });
